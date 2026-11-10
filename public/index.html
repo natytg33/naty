@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Rubor · Tienda para adultos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;800&family=DM+Sans:wght@400;500;700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #fbf3f5;
+      --surface: #fff;
+      --ink: #2b0f1e;
+      --muted: #7a5a68;
+      --line: #ecd5de;
+      --brand: #7a1240;
+      --accent: #e0245e;
+      --on-brand: #fff;
+      --shadow: 0 10px 30px rgba(74, 14, 43, .12);
+      color-scheme: light;
+      box-sizing: border-box;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px)
+    }
+
+    @media (prefers-color-scheme:dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #1a0911;
+        --surface: #26101a;
+        --ink: #f8e9ef;
+        --muted: #c49cae;
+        --line: #43222f;
+        --brand: #f0577f;
+        --accent: #ff4d85;
+        --on-brand: #1a0911;
+        --shadow: 0 10px 30px rgba(0, 0, 0, .5);
+        color-scheme: dark
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --bg: #1a0911;
+      --surface: #26101a;
+      --ink: #f8e9ef;
+      --muted: #c49cae;
+      --line: #43222f;
+      --brand: #f0577f;
+      --accent: #ff4d85;
+      --on-brand: #1a0911;
+      --shadow: 0 10px 30px rgba(0, 0, 0, .5);
+      color-scheme: dark
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: inherit
+    }
+
+    html {
+      scroll-padding-top: env(safe-area-inset-top, 0px);
+      scroll-behavior: smooth
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 16px/1.55 "DM Sans", system-ui, sans-serif
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: Syne, "DM Sans", sans-serif;
+      line-height: 1.1;
+      margin: 0
+    }
+
+    a {
+      color: inherit
+    }
+
+    button {
+      font: inherit;
+      cursor: pointer
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 2px
+    }
+
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px
+    }
+
+    header {
+      position: sticky;
+      top: env(safe-area-inset-top, 0px);
+      z-index: 20;
+      background: var(--bg);
+      border-bottom: 1px solid var(--line)
+    }
+
+    .bar {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      height: 64px
+    }
+
+    .logo {
+      font: 800 26px Syne, sans-serif;
+      color: var(--brand);
+      text-decoration: none;
+      margin-right: auto
+    }
+
+    nav {
+      display: flex;
+      gap: 22px
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--muted);
+      font-weight: 500
+    }
+
+    nav a:hover {
+      color: var(--ink)
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 999px;
+      padding: 12px 22px;
+      font-weight: 700;
+      background: var(--brand);
+      color: var(--on-brand)
+    }
+
+    .btn:hover {
+      filter: brightness(1.1)
+    }
+
+    .btn.ghost {
+      background: transparent;
+      color: var(--ink);
+      border: 1.5px solid var(--line)
+    }
+
+    .btn.block {
+      width: 100%
+    }
+
+    .cartbtn {
+      position: relative;
+      padding: 10px 18px
+    }
+
+    .cartbtn b {
+      background: var(--accent);
+      color: #fff;
+      border-radius: 999px;
+      padding: 1px 8px;
+      margin-left: 6px;
+      font-size: 13px
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 40px;
+      align-items: center;
+      padding: 64px 0 48px
+    }
+
+    .hero h1 {
+      font-size: clamp(38px, 6vw, 68px);
+      font-weight: 800;
+      color: var(--brand)
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 46ch;
+      margin: 18px 0 28px
+    }
+
+    .hero .cta {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap
+    }
+
+    .art {
+      aspect-ratio: 4/5;
+      border-radius: 200px 200px 24px 24px;
+      background: radial-gradient(circle at 30% 25%, #ff7aa3 0, transparent 45%), radial-gradient(circle at 75% 70%, #7a1240 0, transparent 55%), linear-gradient(160deg, #3a0b24, #c2185b);
+      position: relative;
+      box-shadow: var(--shadow);
+      overflow: hidden
+    }
+
+    .art::after {
+      content: "";
+      position: absolute;
+      inset: 14px;
+      border: 1.5px solid rgba(255, 255, 255, .35);
+      border-radius: 190px 190px 12px 12px
+    }
+
+    .trust {
+      display: flex;
+      gap: 28px;
+      flex-wrap: wrap;
+      padding: 18px 0;
+      border-block: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 14px
+    }
+
+    section {
+      padding: 56px 0
+    }
+
+    .head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 24px
+    }
+
+    .head h2 {
+      font-size: clamp(28px, 4vw, 40px)
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap
+    }
+
+    .tab {
+      border: 1.5px solid var(--line);
+      background: transparent;
+      color: var(--ink);
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-weight: 500
+    }
+
+    .tab[aria-pressed="true"] {
+      background: var(--brand);
+      color: var(--on-brand);
+      border-color: var(--brand)
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 20px
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column
+    }
+
+    .card .img {
+      aspect-ratio: 1/1;
+      position: relative;
+      display: grid;
+      place-items: center
+    }
+
+    .card .img span {
+      font: 800 15px Syne, sans-serif;
+      color: rgba(255, 255, 255, .85);
+      background: rgba(0, 0, 0, .28);
+      padding: 6px 12px;
+      border-radius: 999px;
+      backdrop-filter: blur(6px)
+    }
+
+    .tag {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--surface);
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 999px;
+      padding: 3px 10px
+    }
+
+    .card .body {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1
+    }
+
+    .card h3 {
+      font-size: 19px
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px
+    }
+
+    .card .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+      padding-top: 12px
+    }
+
+    .price {
+      font: 800 20px Syne, sans-serif
+    }
+
+    .add {
+      padding: 9px 16px;
+      font-size: 14px
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      counter-reset: s
+    }
+
+    .step {
+      border-top: 3px solid var(--accent);
+      padding-top: 14px
+    }
+
+    .step::before {
+      counter-increment: s;
+      content: counter(s);
+      font: 800 32px Syne, sans-serif;
+      color: var(--brand)
+    }
+
+    .step h3 {
+      font-size: 20px;
+      margin: 6px 0
+    }
+
+    .step p {
+      margin: 0;
+      color: var(--muted)
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 32px 0 48px;
+      color: var(--muted);
+      font-size: 14px
+    }
+
+    footer .wrap {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap
+    }
+
+    .pay {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap
+    }
+
+    .pay i {
+      font-style: normal;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 2px 10px;
+      font-weight: 700;
+      font-size: 12px
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 5, 12, .6);
+      z-index: 50;
+      display: none;
+      padding: env(safe-area-inset-top, 0px) 0 env(safe-area-inset-bottom, 0px)
+    }
+
+    .overlay.open {
+      display: flex
+    }
+
+    .gate {
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+      z-index: 100;
+      text-align: center;
+      padding: 24px
+    }
+
+    .gate h2 {
+      font-size: 40px;
+      color: var(--brand);
+      margin-bottom: 12px
+    }
+
+    .gate p {
+      color: var(--muted);
+      max-width: 40ch;
+      margin: 0 auto 24px
+    }
+
+    .drawer {
+      margin-left: auto;
+      width: min(420px, 100%);
+      background: var(--bg);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      overflow-y: auto
+    }
+
+    .modal {
+      margin: auto;
+      width: min(760px, 94%);
+      max-height: 94%;
+      background: var(--bg);
+      border-radius: 20px;
+      padding: 24px;
+      overflow-y: auto;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 24px
+    }
+
+    .close {
+      background: none;
+      border: 0;
+      font-size: 26px;
+      color: var(--ink);
+      line-height: 1
+    }
+
+    .line {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--line)
+    }
+
+    .line .sw {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      flex: none
+    }
+
+    .line .t {
+      flex: 1;
+      font-size: 15px
+    }
+
+    .qty {
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .qty button {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--ink)
+    }
+
+    .tot {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      color: var(--muted)
+    }
+
+    .tot.big {
+      color: var(--ink);
+      font: 800 20px Syne, sans-serif;
+      border-top: 1px solid var(--line);
+      margin-top: 6px;
+      padding-top: 12px
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 12px
+    }
+
+    input[type=text],
+    input[type=email] {
+      width: 100%;
+      margin-top: 4px;
+      padding: 11px 12px;
+      border-radius: 10px;
+      border: 1.5px solid var(--line);
+      background: var(--surface);
+      color: var(--ink);
+      font: inherit
+    }
+
+    .opt {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      border: 1.5px solid var(--line);
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      background: var(--surface);
+      cursor: pointer;
+      font-weight: 500
+    }
+
+    .opt:has(input:checked) {
+      border-color: var(--brand)
+    }
+
+    .paypal {
+      background: #ffc439;
+      color: #111;
+      font-weight: 800
+    }
+
+    .note {
+      font-size: 13px;
+      color: var(--muted)
+    }
+
+    .ok {
+      text-align: center;
+      grid-column: 1/-1;
+      padding: 40px 10px
+    }
+
+    .ok h2 {
+      color: var(--brand);
+      margin-bottom: 10px
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+      transform: translateX(-50%);
+      background: var(--ink);
+      color: var(--bg);
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 14px;
+      z-index: 90;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s
+    }
+
+    .toast.show {
+      opacity: 1
+    }
+
+    .card .img {
+      overflow: hidden;
+      cursor: pointer
+    }
+
+    .card .img svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%
+    }
+
+    .card .img span {
+      position: relative;
+      z-index: 1
+    }
+
+    .card .img .tag {
+      position: absolute;
+      z-index: 2
+    }
+
+    .card .img .lock {
+      align-self: end;
+      margin-bottom: 14px;
+      font-size: 13px
+    }
+
+    svg.blur {
+      filter: blur(14px);
+      transform: scale(1.2)
+    }
+
+    .dv {
+      display: block;
+      width: min(820px, 94%)
+    }
+
+    .dvTop {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      margin-bottom: 22px
+    }
+
+    .cover {
+      position: relative;
+      aspect-ratio: 1/1;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow)
+    }
+
+    .cover svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%
+    }
+
+    .cover .tag {
+      z-index: 2
+    }
+
+    .thumbs {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px
+    }
+
+    .th {
+      position: relative;
+      aspect-ratio: 1/1;
+      border-radius: 10px;
+      overflow: hidden
+    }
+
+    .th svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%
+    }
+
+    .th b {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 12px;
+      z-index: 1;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, .6)
+    }
+
+    @media (max-width:760px) {
+      .dvTop {
+        grid-template-columns: 1fr
+      }
+
+      .thumbs {
+        grid-template-columns: repeat(3, 1fr)
+      }
+    }
+
+    @media (max-width:760px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 36px
+      }
+
+      .art {
+        max-height: 340px;
+        aspect-ratio: auto;
+        height: 300px
+      }
+
+      .steps {
+        grid-template-columns: 1fr
+      }
+
+      .modal {
+        grid-template-columns: 1fr
+      }
+
+      nav {
+        display: none
+      }
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+      html {
+        scroll-behavior: auto
+      }
+
+      .toast {
+        transition: none
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="overlay gate open" id="gate" role="dialog" aria-modal="true" aria-labelledby="gt">
+    <div>
+      <h2 id="gt">Solo para mayores de 18</h2>
+      <p>Esta tienda vende contenido y productos para adultos. Confirma tu edad para continuar.</p>
+      <button class="btn" id="yes">Tengo 18 años o más</button>
+      <button class="btn ghost" id="no">Salir</button>
+    </div>
+  </div>
+
+  <header>
+    <div class="wrap bar">
+      <a class="logo" href="#">Rubor</a>
+      <nav><a href="#catalogo">Catálogo</a><a href="#como">Cómo funciona</a><a href="#privacidad">Privacidad</a></nav>
+      <button class="btn ghost cartbtn" id="openCart" aria-label="Abrir carrito">Carrito<b id="count">0</b></button>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <div class="hero">
+        <div>
+          <h1>Packs exclusivos, solo para adultos.</h1>
+          <p>Fotos, videos y sets de creadores verificados. Compras, pagas y descargas al instante.</p>
+          <div class="cta"><a class="btn" href="#catalogo" style="text-decoration:none">Ver catálogo</a><a
+              class="btn ghost" href="#como" style="text-decoration:none">Cómo funciona</a></div>
+        </div>
+        <div class="art" role="img" aria-label="Imagen de portada (placeholder)"></div>
+      </div>
+      <div class="trust"><span>Creadores mayores de 18 verificados</span><span>Descarga inmediata</span><span>Pago
+          seguro</span><span>Cargo con nombre neutro en tu estado de cuenta</span></div>
+    </div>
+
+    <section id="catalogo">
+      <div class="wrap">
+        <div class="head">
+          <h2>Packs disponibles</h2>
+          <div class="tabs" id="tabs">
+            <button class="tab" data-f="all" aria-pressed="true">Todo</button>
+            <button class="tab" data-f="Fotos" aria-pressed="false">Fotos</button>
+            <button class="tab" data-f="Videos" aria-pressed="false">Videos</button>
+            <button class="tab" data-f="Combo" aria-pressed="false">Combos</button>
+          </div>
+        </div>
+        <div class="grid" id="grid"></div>
+      </div>
+    </section>
+
+    <section id="como">
+      <div class="wrap">
+        <div class="head">
+          <h2>Cómo funciona</h2>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <h3>Elige</h3>
+            <p>Mira la portada y lo que incluye cada pack, y agrégalo al carrito.</p>
+          </div>
+          <div class="step">
+            <h3>Paga</h3>
+            <p>Checkout con PayPal, tarjeta u otros métodos. Sin crear cuenta.</p>
+          </div>
+          <div class="step">
+            <h3>Descarga</h3>
+            <p>Te llega un enlace al correo al instante, válido por 7 días.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="privacidad">
+      <div class="wrap">
+        <div class="head">
+          <h2>Tu privacidad primero</h2>
+        </div>
+        <p style="max-width:62ch;color:var(--muted)">Cobramos con nombre neutro en tu estado de cuenta, el correo llega
+          con remitente genérico y no compartimos tus datos con terceros. Todos los creadores son mayores de edad y
+          verificados. <span class="note">(Texto de ejemplo: ajústalo a tu política real.)</span></p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div><b style="color:var(--ink)">Rubor</b><br>Contenido solo para mayores de 18 años.<br>Términos · Privacidad ·
+        Contacto · Quiero vender mis packs</div>
+      <div class="pay"><i>PayPal</i><i>Visa</i><i>Mastercard</i><i>Transferencia</i></div>
+    </div>
+  </footer>
+
+  <div class="overlay" id="cartOv">
+    <aside class="drawer" aria-label="Carrito">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <h2 style="font-size:26px">Tu carrito</h2><button class="close" data-close aria-label="Cerrar">×</button>
+      </div>
+      <div id="lines" style="flex:1;margin:12px 0"></div>
+      <div id="cartTot"></div>
+      <button class="btn block" id="toCheckout" style="margin-top:12px">Ir al pago</button>
+    </aside>
+  </div>
+
+  <div class="overlay" id="coOv">
+    <div class="modal" role="dialog" aria-modal="true" aria-label="Pago">
+      <div id="coForm">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <h2 style="font-size:26px">Pago</h2><button class="close" data-close aria-label="Cerrar">×</button>
+        </div>
+        <label>Correo (aquí llegan tus packs)<input type="email" id="mail" placeholder="tu@correo.com"></label>
+        <label id="addrWrap" hidden></label>
+        <div style="font-weight:500;font-size:14px;margin-bottom:8px">Método de pago</div>
+        <label class="opt"><input type="radio" name="pm" value="paypal" checked> PayPal</label>
+        <label class="opt"><input type="radio" name="pm" value="card"> Tarjeta de crédito o débito</label>
+        <label class="opt"><input type="radio" name="pm" value="other"> Transferencia / billetera local</label>
+        <p class="note">Mockup: aquí se conectaría el botón real de PayPal (SDK) o tu pasarela (Stripe, Wompi,
+          MercadoPago…).</p>
+      </div>
+      <div id="coSum">
+        <h3 style="font-size:20px;margin-bottom:8px">Resumen</h3>
+        <div id="sumLines"></div>
+        <div id="sumTot"></div>
+        <button class="btn block paypal" id="pay" style="margin-top:14px">Pagar con PayPal</button>
+      </div>
+      <div class="ok" id="coOk" hidden>
+        <h2>¡Pedido confirmado!</h2>
+        <p>Enviamos el recibo y tus descargas a tu correo. Los objetos salen en empaque discreto.</p><button class="btn"
+          data-close>Seguir comprando</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="dvOv">
+    <div class="modal dv" role="dialog" aria-modal="true" aria-label="Detalle del pack">
+      <div id="dvBody"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script>
+    var P = [
+      { id: 1, n: "Noches de Seda", t: "Fotos", a: "Valentina", m: "40 fotos HD", d: "Sesión íntima en lencería, tonos vino.", p: 12, c: ["#7a1240", "#ff7aa3"] },
+      { id: 2, n: "Sábado en Casa", t: "Videos", a: "Camila", m: "6 videos · 35 min", d: "Videos caseros y cercanos, con audio.", p: 19, c: ["#3a0b24", "#c2185b"] },
+      { id: 3, n: "Boudoir Dorado", t: "Fotos", a: "Luna", m: "60 fotos HD", d: "Sesión de estudio con luz cálida.", p: 15, c: ["#5b1038", "#f06292"] },
+      { id: 4, n: "Solo para Ti", t: "Videos", a: "Daniela", m: "3 videos · 20 min", d: "Mensajes personalizados en video.", p: 9, c: ["#8e1b4f", "#ffb3c6"] },
+      { id: 5, n: "Pack Completo Verano", t: "Combo", a: "Valentina", m: "80 fotos + 8 videos", d: "Toda la colección de la temporada, con extras.", p: 29, c: ["#6d1b3a", "#e8a0b5"] },
+      { id: 6, n: "Detrás de Cámara", t: "Combo", a: "Camila", m: "30 fotos + 4 videos", d: "Making of de sus mejores sesiones.", p: 17, c: ["#2b0f1e", "#a31550"] },
+      { id: 7, n: "Luz de Vela", t: "Fotos", a: "Luna", m: "35 fotos HD", d: "Ambiente íntimo y tenue, estilo cine.", p: 10, c: ["#7a1240", "#ffcc80"] },
+      { id: 8, n: "Suscripción de Mes", t: "Combo", a: "Daniela", m: "Contenido nuevo cada semana", d: "Acceso por 30 días a todo lo que publique.", p: 24, c: ["#4a0e2b", "#ff4d85"] }
+    ];
+    var cart = {}, $ = function (s) { return document.querySelector(s) };
+    function money(n) { return "$" + n.toFixed(2) + " USD" }
+    function toast(m) { var t = $("#toast"); t.textContent = m; t.classList.add("show"); setTimeout(function () { t.classList.remove("show") }, 1600) }
+    function bg(c) { return "linear-gradient(150deg," + c[0] + "," + c[1] + ")" }
+    function render(f) {
+      $("#grid").innerHTML = P.filter(function (x) { return f === "all" || x.t === f }).map(function (x) {
+        return '<article class="card"><div class="img" data-view="' + x.id + '"><span class="tag">' + x.t + '</span>' + art(x, true, 0) + '<span class="lock">Vista previa borrosa</span></div><div class="body"><h3>' + x.n + '</h3><p class="note">por ' + x.a + ' · ' + x.m + '</p><p>' + x.d + '</p><div class="row"><span class="price">$' + x.p + '</span><span style="display:flex;gap:6px"><button class="btn ghost add" data-view="' + x.id + '">Ver</button><button class="btn add" data-add="' + x.id + '">Agregar</button></span></div></div></article>'
+      }).join("");
+    }
+    function items() { return Object.keys(cart).map(function (k) { var p = P.filter(function (x) { return x.id == k })[0]; return { p: p, q: cart[k] } }) }
+    function totals() { var s = 0, ship = 0, it = items(); it.forEach(function (i) { s += i.p.p * i.q; }); return { s: s, ship: ship, total: s + ship, it: it } }
+    function tot(T) { return '<div class="tot"><span>Subtotal</span><span>' + money(T.s) + '</span></div><div class="tot"><span>Envío</span><span>' + (T.ship ? money(T.ship) : "Gratis") + '</span></div><div class="tot big"><span>Total</span><span>' + money(T.total) + '</span></div>' }
+    function update() {
+      var T = totals(), n = 0; T.it.forEach(function (i) { n += i.q }); $("#count").textContent = n;
+      $("#lines").innerHTML = T.it.length ? T.it.map(function (i) { return '<div class="line"><div class="sw" style="background:' + bg(i.p.c) + '"></div><div class="t"><b>' + i.p.n + '</b><br><span class="note">' + i.p.t + ' · $' + i.p.p + '</span></div><div class="qty"><button data-dec="' + i.p.id + '" aria-label="Quitar uno">−</button>' + i.q + '<button data-inc="' + i.p.id + '" aria-label="Agregar uno">+</button></div></div>' }).join("") : '<p class="note">Tu carrito está vacío. Agrega un pack u objeto del catálogo.</p>';
+      $("#cartTot").innerHTML = T.it.length ? tot(T) : "";
+      $("#toCheckout").disabled = !T.it.length;
+      $("#sumLines").innerHTML = T.it.map(function (i) { return '<div class="tot"><span>' + i.q + ' × ' + i.p.n + '</span><span>$' + (i.p.p * i.q) + '</span></div>' }).join("");
+      $("#sumTot").innerHTML = tot(T);
+      $("#addrWrap").hidden = !T.ship;
+    }
+    function art(p, blur, i) {
+      var c = p.c, id = 'g' + p.id + '_' + i, f = i % 2 ? 'translate(400,0) scale(-1,1)' : '', s = i % 3 === 1 ? 'translate(-40,-20) scale(1.15)' : '';
+      return '<svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" class="' + (blur ? 'blur' : '') + '" aria-hidden="true"><defs><linearGradient id="' + id + '" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="' + c[0] + '"/><stop offset="1" stop-color="' + c[1] + '"/></linearGradient></defs><rect width="400" height="400" fill="url(#' + id + ')"/><g transform="' + f + ' ' + s + '"><circle cx="300" cy="95" r="48" fill="#fff" opacity=".2"/><path d="M0 335C90 295 200 355 400 300V400H0Z" fill="#000" opacity=".28"/><path d="M105 262C106 222 150 208 188 226C220 241 238 192 278 192C318 192 342 238 382 296L374 306C338 266 312 268 280 268C246 268 226 290 190 288C150 286 112 296 105 262Z" fill="#1a0610" opacity=".88"/><circle cx="98" cy="222" r="21" fill="#1a0610" opacity=".88"/><path d="M20 160C110 190 170 140 260 170S350 200 400 170" fill="none" stroke="#fff" stroke-width="3" opacity=".3"/><path d="M0 200C100 235 190 175 270 215S360 240 400 215" fill="none" stroke="#fff" stroke-width="2" opacity=".2"/></g></svg>';
+    }
+    function detail(id) {
+      var p = P.filter(function (x) { return x.id == id })[0], th = '';
+      for (var i = 1; i <= 8; i++)th += '<div class="th">' + art(p, true, i) + '<b>Bloqueado</b></div>';
+      $('#dvBody').innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><span class="note">' + p.t + ' · por ' + p.a + '</span><button class="close" data-close aria-label="Cerrar">×</button></div>' +
+        '<div class="dvTop"><div class="cover"><span class="tag">Portada (visible)</span>' + art(p, false, 0) + '</div><div><h2 style="font-size:32px">' + p.n + '</h2><p class="note" style="margin:8px 0">' + p.m + '</p><p>' + p.d + ' Incluye contenido exclusivo en alta calidad, sin marcas de agua tras la compra.</p><p class="price" style="font-size:30px;margin:14px 0">$' + p.p + ' USD</p><button class="btn block" data-add="' + p.id + '">Agregar al carrito</button><p class="note" style="margin-top:10px">Descarga inmediata por correo tras el pago.</p></div></div>' +
+        '<h3 style="font-size:20px;margin-bottom:10px">Contenido del pack</h3><p class="note" style="margin:0 0 10px">Solo la portada es visible. El resto se desbloquea al comprar.</p><div class="thumbs">' + th + '</div>';
+      open('#dvOv');
+    }
+    document.addEventListener('click', function (e) { var v = e.target.closest('[data-view]'); if (v) detail(v.dataset.view) });
+    function open(id) { $(id).classList.add("open") }
+    function closeAll() { ["#cartOv", "#coOv", "#dvOv"].forEach(function (i) { $(i).classList.remove("open") }); $("#coOk").hidden = true; $("#coForm").hidden = false; $("#coSum").hidden = false }
+    document.addEventListener("click", function (e) {
+      var t = e.target;
+      if (t.dataset.add) { cart[t.dataset.add] = (cart[t.dataset.add] || 0) + 1; update(); toast("Agregado al carrito") }
+      if (t.dataset.inc) { cart[t.dataset.inc]++; update() }
+      if (t.dataset.dec) { cart[t.dataset.dec]--; if (!cart[t.dataset.dec]) delete cart[t.dataset.dec]; update() }
+      if (t.hasAttribute("data-close")) { if (!$("#coOk").hidden) { cart = {}; update() } closeAll() }
+      if (t.classList.contains("tab")) { document.querySelectorAll(".tab").forEach(function (b) { b.setAttribute("aria-pressed", b === t) }); render(t.dataset.f) }
+      if (t.classList.contains("overlay") && t.id !== "gate") closeAll();
+    });
+    $("#openCart").onclick = function () { open("#cartOv") };
+    $("#toCheckout").onclick = function () { $("#cartOv").classList.remove("open"); open("#coOv") };
+    $("#yes").onclick = function () { $("#gate").classList.remove("open") };
+    $("#no").onclick = function () { location.href = "https://www.google.com" };
+    document.querySelectorAll("input[name=pm]").forEach(function (r) { r.onchange = function () { var v = document.querySelector("input[name=pm]:checked").value; var b = $("#pay"); b.className = "btn block" + (v === "paypal" ? " paypal" : ""); b.textContent = v === "paypal" ? "Pagar con PayPal" : "Pagar ahora" } });
+    $("#pay").onclick = function () { if (!$("#mail").value.includes("@")) { toast("Escribe un correo válido"); $("#mail").focus(); return } $("#coForm").hidden = true; $("#coSum").hidden = true; $("#coOk").hidden = false };
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeAll() });
+    render("all"); update();
+  </script>
+  <script>
+    (function () {
+      var old = art;
+      art = function (p, blur, i) {
+        if (!p.cover) return old(p, blur, i);
+        var s = p.cover;
+        if (blur && p.kind === 'digital') s = (i > 0 && p.thumbs && p.thumbs.length) ? p.thumbs[(i - 1) % p.thumbs.length] : p.blur;
+        return '<img src="' + s + '" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">';
+      };
+      document.getElementById('tabs').insertAdjacentHTML('beforeend', '<button class="tab" data-f="Objeto" aria-pressed="false">Objetos</button>');
+      fetch('/api/products').then(function (r) { return r.json() }).then(function (d) {
+        if (!d.length) { toast('Modo demo: sube productos en /admin'); return }
+        P.length = 0; d.forEach(function (x) { P.push(x) }); render('all');
+      }).catch(function () { });
+      $('#pay').onclick = function () {
+        var email = $('#mail').value; if (!email.includes('@')) { toast('Escribe un correo válido'); return }
+        var items = Object.keys(cart).map(function (k) { return { id: +k, q: cart[k] } });
+        fetch('/api/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items: items, email: email }) })
+          .then(function (r) { return r.json() }).then(function (d) { if (d.url) location.href = d.url; else toast(d.error || 'Error en el pago') })
+          .catch(function () { toast('Sin conexión con el servidor') });
+      };
+    })();
+  </script>
+</body>
+
+</html>
